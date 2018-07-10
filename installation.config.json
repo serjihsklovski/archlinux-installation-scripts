@@ -1,0 +1,24 @@
+{
+  "device": "/dev/sda",
+  "partitions": [
+    {
+      "type": "EFI",
+      "size": "300Mb"
+    },
+    {
+      "type": "ROOT",
+      "size": "150Gb"
+    },
+    {
+      "type": "SWAP",
+      "size": "8Gb"
+    },
+    {
+      "type": "HOME",
+      "size": null
+    }
+  ],
+  "hostname": "FrankenPad",
+  "username": "serjihsklovski",
+  "password": "1234"
+}
