@@ -13,4 +13,4 @@ if __name__ == '__main__':
 
     device = config['device']
     sgdisk.set_device(device)
-    sgdisk.print_table(device)
+    sgdisk.print_table()
