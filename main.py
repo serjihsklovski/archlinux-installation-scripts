@@ -3,6 +3,13 @@ import sgdisk
 from argparse import ArgumentParser
 
 
+def do_disk_partitioning(device: str):
+    sgdisk.set_device(device)
+    sgdisk.clear()
+    sgdisk.convert_mbr_to_gpt()
+    sgdisk.print_table()
+
+
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-f', '--file', required=True)
@@ -11,6 +18,4 @@ if __name__ == '__main__':
 
     config = config_loader.load(args.file)
 
-    device = config['device']
-    sgdisk.set_device(device)
-    sgdisk.print_table()
+    do_disk_partitioning(config['device'])
