@@ -1,14 +1,18 @@
 import subprocess
 
 
-_SUCCESS_OUTPUT = 'The operation has completed successfully.'
+_SUCCESS_OUTPUT = 'The operation has completed successfully.\n'
 
 _device = None
 
 
-def _handle_output_not_success(output):
-    if output != _SUCCESS_OUTPUT:
+def _handle_output_not_success(output: bytes):
+    if output.decode('utf-8') != _SUCCESS_OUTPUT:
         raise Exception('The operation was completed improperly.')
+
+
+def _handle_output_print(output: bytes):
+    print(output.decode('utf-8'))
 
 
 def _sgdisk_wrapper(device_getter, output_handler=_handle_output_not_success):
@@ -30,7 +34,7 @@ def get_device():
     return _device
 
 
-@_sgdisk_wrapper(get_device, output_handler=lambda output: print(output))
+@_sgdisk_wrapper(get_device, output_handler=_handle_output_print)
 def print_table():
     return '--print'
 
