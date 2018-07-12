@@ -3,19 +3,23 @@
   "partitions": [
     {
       "type": "EFI",
-      "size": "300Mb"
+      "size": "300MB",
+      "name": "EFI System Partition"
     },
     {
       "type": "ROOT",
-      "size": "150Gb"
+      "size": "150GB",
+      "name": "Linux Root"
     },
     {
       "type": "SWAP",
-      "size": "8Gb"
+      "size": "8GB",
+      "name": "Linux Swap"
     },
     {
       "type": "HOME",
-      "size": null
+      "size": null,
+      "name": "Linux Home"
     }
   ],
   "hostname": "FrankenPad",
