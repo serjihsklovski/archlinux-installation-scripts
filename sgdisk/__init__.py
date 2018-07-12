@@ -53,7 +53,7 @@ _device = None
 
 
 def _handle_output_not_success(output: bytes):
-    if output.decode('utf-8') != _SUCCESS_OUTPUT:
+    if not output.decode('utf-8').endswith(_SUCCESS_OUTPUT):
         raise Exception('The operation was completed improperly.')
 
 
@@ -115,7 +115,7 @@ def create_partition_as_rest(partition_type: PartitionType, name: str):
 
 if __name__ == '__main__':
     assert SizeUnit.get_value(SizeUnit.MEGABYTES) == 'M', '`SizeUnit.MEGABYTES` should be "M"'
-    assert SizeUnit.get_value(SizeUnit.GIGABYTES) == 'G', '`SuzeUnit.GIGABYTES` should be "G"'
+    assert SizeUnit.get_value(SizeUnit.GIGABYTES) == 'G', '`SizeUnit.GIGABYTES` should be "G"'
 
     assert PartitionType.get_value(PartitionType.EFI) == 'ef00', '`PartitionType.EFI` should be "ef00"'
     assert PartitionType.get_value(PartitionType.ROOT) == '8300', '`PartitionType.ROOT` should be "8300"'
