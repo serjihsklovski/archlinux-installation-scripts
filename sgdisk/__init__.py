@@ -65,7 +65,7 @@ def _sgdisk_wrapper(device_getter, output_handler=_handle_output_not_success):
     def wrap1(sgdisk_cmd):
         def wrap2(*args, **kwargs):
             output = subprocess.check_output(
-                'sgdisk {cmd} {device}'.format(cmd=sgdisk_cmd(), device=device_getter(args, kwargs)), shell=True)
+                'sgdisk {cmd} {device}'.format(cmd=sgdisk_cmd(), device=device_getter(*args, **kwargs)), shell=True)
             return output_handler(output)
         return wrap2
     return wrap1
