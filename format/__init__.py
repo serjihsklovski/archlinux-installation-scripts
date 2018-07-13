@@ -9,12 +9,12 @@ def _run_command(f):
 
 @_run_command
 def fat32(device: str, label: str):
-    return '/usr/bin/mkfs.fat -F32 "{device}" -n "{label}"'.format(device=device, label=label.upper())
+    return 'mkfs.fat -F32 "{device}" -n "{label}"'.format(device=device, label=label.upper())
 
 
 @_run_command
 def ext4(device: str, label: str):
-    return '/usr/bin/mkfs.ext4 "{device}" -L "{label}"'.format(device=device, label=label)
+    return 'mkfs.ext4 "{device}" -L "{label}"'.format(device=device, label=label)
 
 
 @_run_command
