@@ -14,9 +14,9 @@ def fat32(device: str, label: str):
 
 @_run_command
 def ext4(device: str, label: str):
-    return '/usr/bin/mkfs.ext4 "{device}" --label="{label}"'.format(device=device, label=label)
+    return '/usr/bin/mkfs.ext4 "{device}" -L "{label}"'.format(device=device, label=label)
 
 
 @_run_command
 def swap(device: str, label: str):
-    return 'mkswap "{device}" --label="{label}"'.format(device=device, label=label)
+    return 'mkswap "{device}" -L "{label}"'.format(device=device, label=label)
