@@ -1,5 +1,6 @@
 import config_loader
 import sgdisk
+import format
 import re
 from argparse import ArgumentParser
 from sgdisk import SizeUnit, PartitionType
@@ -37,6 +38,19 @@ def perform_disk_partitioning(device: str, partitions: list):
     sgdisk.print_table()
 
 
+def perform_disk_formatting(partitions: list):
+    format_map = {
+        'fat32': format.fat32,
+        'ext4': format.ext4,
+        'swap': format.swap,
+    }
+
+    for partition in partitions:
+        format_attr = partition['format']
+        func = format_map[format_attr['fs']]
+        func(format_attr['device'], format_attr['label'])
+
+
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-f', '--file', default=DEFAULT_CONFIG_PATH)
@@ -46,3 +60,4 @@ if __name__ == '__main__':
     config = config_loader.load(args.file)
 
     perform_disk_partitioning(config['device'], config['partitions'])
+    perform_disk_formatting(config['partitions'])

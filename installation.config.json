@@ -3,23 +3,43 @@
   "partitions": [
     {
       "type": "EFI",
-      "size": "300MB",
-      "name": "EFI System Partition"
+      "size": "512MB",
+      "name": "EFI System Partition",
+      "format": {
+        "fs": "fat32",
+        "device": "/dev/sda1",
+        "label": "BOOT"
+      }
     },
     {
       "type": "ROOT",
       "size": "150GB",
-      "name": "Linux Root"
+      "name": "Linux Root",
+      "format": {
+        "fs": "ext4",
+        "device": "/dev/sda2",
+        "label": "root"
+      }
     },
     {
       "type": "SWAP",
       "size": "8GB",
-      "name": "Linux Swap"
+      "name": "Linux Swap",
+      "format": {
+        "fs": "swap",
+        "device": "/dev/sda3",
+        "label": "swap"
+      }
     },
     {
       "type": "HOME",
       "size": null,
-      "name": "Linux Home"
+      "name": "Linux Home",
+      "format": {
+        "fs": "ext4",
+        "device": "/dev/sda4",
+        "label": "home"
+      }
     }
   ],
   "hostname": "FrankenPad",
