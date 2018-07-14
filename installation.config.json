@@ -42,6 +42,24 @@
       }
     }
   ],
+  "mount": [
+    {
+      "device": "/dev/sda2",
+      "dir": "/mnt"
+    },
+    {
+      "device": "/dev/sda1",
+      "dir": "/mnt/boot"
+    },
+    {
+      "device": "/dev/sda4",
+      "dir": "/mnt/home"
+    },
+    {
+      "device": "/dev/sda3",
+      "swap": true
+    }
+  ],
   "hostname": "FrankenPad",
   "username": "serjihsklovski",
   "password": "1234"
