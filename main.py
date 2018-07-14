@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 
 import config_loader
 import format
+import installation
 import mnt_devs
 import sgdisk
 from sgdisk import SizeUnit, PartitionType
@@ -74,3 +75,4 @@ if __name__ == '__main__':
     perform_disk_partitioning(config['device'], config['partitions'])
     perform_disk_formatting(config['partitions'])
     perform_devices_mounting(config['mount'])
+    installation.set_mirrors(config['mirrors'])

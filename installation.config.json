@@ -60,6 +60,13 @@
       "swap": true
     }
   ],
+  "mirrors": [
+    "http://mirror.truenetwork.ru/archlinux/$repo/os/$arch",
+    "http://archlinux.zepto.cloud/$repo/os/$arch",
+    "http://mirror.yandex.ru/archlinux/$repo/os/$arch",
+    "http://mirror.rol.ru/archlinux/$repo/os/$arch",
+    "http://mirror.aur.rocks/$repo/os/$arch"
+  ],
   "hostname": "FrankenPad",
   "username": "serjihsklovski",
   "password": "1234"
