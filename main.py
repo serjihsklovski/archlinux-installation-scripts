@@ -1,10 +1,12 @@
-import config_loader
-import sgdisk
-import format
+import os
 import re
 from argparse import ArgumentParser
-from sgdisk import SizeUnit, PartitionType
 
+import config_loader
+import format
+import mnt_devs
+import sgdisk
+from sgdisk import SizeUnit, PartitionType
 
 SIZE_POSTFIX_TO_UNIT = {
     'MB': SizeUnit.MEGABYTES,
@@ -51,6 +53,14 @@ def perform_disk_formatting(partitions: list):
         func(format_attr['device'], format_attr['label'])
 
 
+def perform_devices_mounting(mount_config: list):
+    for mc in mount_config:
+        if mc['dir'] is not None:
+            mnt_devs.mount(mc['device'], mc['dir'])
+        elif mc['swap']:
+            mnt_devs.swapon(mc['device'])
+
+
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-f', '--file', default=DEFAULT_CONFIG_PATH)
@@ -59,5 +69,8 @@ if __name__ == '__main__':
 
     config = config_loader.load(args.file)
 
+    os.system('timedatectl set-ntp true')
+    os.system('timedatectl status')
     perform_disk_partitioning(config['device'], config['partitions'])
     perform_disk_formatting(config['partitions'])
+    perform_devices_mounting(config['mount'])
