@@ -55,7 +55,7 @@ def perform_disk_formatting(partitions: list):
 
 def perform_devices_mounting(mount_config: list):
     for mc in mount_config:
-        if mc['dir'] is not None:
+        if 'dir' in mc:
             mnt_devs.mount(mc['device'], mc['dir'])
         elif mc['swap']:
             mnt_devs.swapon(mc['device'])
