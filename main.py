@@ -70,8 +70,7 @@ if __name__ == '__main__':
 
     config = config_loader.load(args.file)
 
-    os.system('timedatectl set-ntp true')
-    os.system('timedatectl status')
+    installer.set_ntp()
     perform_disk_partitioning(config['device'], config['partitions'])
     perform_disk_formatting(config['partitions'])
     perform_devices_mounting(config['mount'])
