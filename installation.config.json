@@ -74,6 +74,10 @@
       "base-devel"
     ]
   },
+  "genfstab": {
+    "mountpoint": "/mnt",
+    "fstab-file": "/mnt/etc/fstab"
+  },
   "hostname": "FrankenPad",
   "username": "serjihsklovski",
   "password": "1234"

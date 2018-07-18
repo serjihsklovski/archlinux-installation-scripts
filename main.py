@@ -18,3 +18,4 @@ if __name__ == '__main__':
     installer.perform_devices_mounting(config['mount'])
     installer.set_mirrors(config['mirrors'])
     installer.pacstrap(config['pacstrap']['path'], config['pacstrap']['groups'])
+    installer.genfstab(config['genfstab']['mountpoint'], config['genfstab']['fstab-file'])
