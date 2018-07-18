@@ -76,3 +76,7 @@ def set_mirrors(mirrors: list):
 
 def pacstrap(path: str, groups: list):
     os.system('pacstrap {path} {groups}'.format(path=path, groups=' '.join(groups)))
+
+
+def genfstab(mountpoint: str, fstab_file: str):
+    os.system('genfstab -t UUID {mountpoint} >> {fstab_file}'.format(mountpoint=mountpoint, fstab_file=fstab_file))
