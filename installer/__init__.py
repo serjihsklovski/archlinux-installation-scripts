@@ -72,3 +72,7 @@ def set_mirrors(mirrors: list):
     os.system('> /etc/pacman.d/mirrorlist')
     for mirror in mirrors:
         os.system('echo "Server = {mirror}" >> /etc/pacman.d/mirrorlist'.format(mirror=mirror))
+
+
+def pacstrap(path: str, groups: list):
+    os.system('pacstrap {path} {groups}'.format(path=path, groups=' '.join(groups)))

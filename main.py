@@ -17,3 +17,4 @@ if __name__ == '__main__':
     installer.perform_disk_formatting(config['partitions'])
     installer.perform_devices_mounting(config['mount'])
     installer.set_mirrors(config['mirrors'])
+    installer.pacstrap(config['pacstrap']['path'], config['pacstrap']['groups'])

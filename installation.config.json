@@ -67,6 +67,13 @@
     "http://mirror.rol.ru/archlinux/\\$repo/os/\\$arch",
     "http://mirror.aur.rocks/\\$repo/os/\\$arch"
   ],
+  "pacstrap": {
+    "path": "/mnt",
+    "groups": [
+      "base",
+      "base-devel"
+    ]
+  },
   "hostname": "FrankenPad",
   "username": "serjihsklovski",
   "password": "1234"
