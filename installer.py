@@ -5,6 +5,7 @@ import datetime
 import format
 import mnt_devs
 import sgdisk
+from command_runner import CommandRunner, run_all_in_system
 from sgdisk import SizeUnit, PartitionType
 
 _SIZE_POSTFIX_TO_UNIT = {
@@ -13,9 +14,12 @@ _SIZE_POSTFIX_TO_UNIT = {
 }
 
 
-def set_ntp():
-    os.system('timedatectl set-ntp true')
-    os.system('timedatectl status')
+def set_ntp() -> CommandRunner:
+    commands = [
+        'timedatectl set-ntp true',
+        'timedatectl status',
+    ]
+    return CommandRunner(commands, run_all_in_system)
 
 
 def _parse_size_and_unit_postfix(size: str) -> tuple:

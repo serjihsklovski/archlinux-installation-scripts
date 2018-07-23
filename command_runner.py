@@ -19,3 +19,8 @@ def run_in_system(code: str):
 def run_handling_output(code: list, output_handler):
     output = subprocess.check_output(code)
     output_handler(output)
+
+
+def run_all_in_system(commands: list):
+    for command in commands:
+        run_in_system(command)

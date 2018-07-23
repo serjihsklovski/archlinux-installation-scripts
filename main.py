@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
     config = config_loader.load(args.file)
 
-    installer.set_ntp()
+    installer.set_ntp().run()
     installer.perform_disk_partitioning(config['device'], config['partitions'])
     installer.perform_disk_formatting(config['partitions'])
     installer.perform_devices_mounting(config['mount'])
