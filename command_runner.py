@@ -4,23 +4,47 @@ import subprocess
 
 class CommandRunner:
 
-    def __init__(self, code, runner):
-        self._code = code
-        self._runner = runner
+    def get_code(self) -> list:
+        raise Exception('Operation is not supported.')
 
     def run(self):
-        self._runner(self._code)
+        raise Exception('Operation is not supported.')
 
 
-def run_in_system(code: str):
-    os.system(code)
+class SystemCommandRunner(CommandRunner):
+
+    def __init__(self, command: str):
+        self._command = command
+
+    def get_code(self) -> list:
+        return [self._command]
+
+    def run(self):
+        os.system(self._command)
 
 
-def run_handling_output(code: list, output_handler):
-    output = subprocess.check_output(code)
-    output_handler(output)
+class SystemListCommandRunner(CommandRunner):
+
+    def __init__(self, commands: list):
+        self._commands = commands
+
+    def get_code(self) -> list:
+        return self._commands
+
+    def run(self):
+        for command in self._commands:
+            os.system(command)
 
 
-def run_all_in_system(commands: list):
-    for command in commands:
-        run_in_system(command)
+class OutputHandlingCommandRunner(CommandRunner):
+
+    def __init__(self, command_parts: list, output_handler):
+        self._command_parts = command_parts
+        self._output_handler = output_handler
+
+    def get_code(self) -> list:
+        return [' '.join(self._command_parts)]
+
+    def run(self):
+        output = subprocess.check_output(self._command_parts)
+        self._output_handler(output)
