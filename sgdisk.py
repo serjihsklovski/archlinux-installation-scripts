@@ -1,6 +1,7 @@
-import subprocess
 from enum import Enum, auto
 from functools import lru_cache
+
+from command_runner import CommandRunner, OutputHandlingCommandRunner
 
 
 class SizeUnit(Enum):
@@ -49,7 +50,7 @@ class PartitionType(Enum):
 
 _SUCCESS_OUTPUT = 'The operation has completed successfully.\n'
 
-_device = None
+_device: str = None
 
 
 def _handle_output_not_success(output: bytes):
@@ -61,16 +62,6 @@ def _handle_output_print(output: bytes):
     print(output.decode('utf-8'))
 
 
-def _sgdisk_wrapper(device_getter, output_handler=_handle_output_not_success):
-    def wrap1(sgdisk_cmd):
-        def wrap2(*args, **kwargs):
-            output = subprocess.check_output(
-                'sgdisk {cmd} {device}'.format(cmd=sgdisk_cmd(*args, **kwargs), device=device_getter()), shell=True)
-            return output_handler(output)
-        return wrap2
-    return wrap1
-
-
 def set_device(device: str):
     global _device
     _device = device
@@ -80,37 +71,51 @@ def get_device():
     return _device
 
 
-@_sgdisk_wrapper(get_device, output_handler=_handle_output_print)
-def print_table():
-    return '--print'
+def clear() -> CommandRunner:
+    return OutputHandlingCommandRunner(
+        ['sgdisk', '--clear', get_device()],
+        _handle_output_not_success,
+    )
 
 
-@_sgdisk_wrapper(get_device)
-def clear():
-    return '--clear'
+def convert_mbr_to_gpt() -> CommandRunner:
+    return OutputHandlingCommandRunner(
+        ['sgdisk', '--mbrtogpt', get_device()],
+        _handle_output_not_success
+    )
 
 
-@_sgdisk_wrapper(get_device)
-def convert_mbr_to_gpt():
-    return '--mbrtogpt'
-
-
-@_sgdisk_wrapper(get_device)
-def create_partition(size: int, size_unit: SizeUnit, partition_type: PartitionType, name: str):
-    return '--new=0:0:+{size}{size_unit} --typecode=0:{type_code} --change-name=0:"{name}"'.format_map({
+def create_partition(size: int, size_unit: SizeUnit, partition_type: PartitionType, name: str) -> CommandRunner:
+    new_partition = '--new=0:0:+{size}{size_unit} --typecode=0:{type_code} --change-name=0:"{name}"'.format_map({
         'size': size,
         'size_unit': SizeUnit.get_value(size_unit),
         'type_code': PartitionType.get_value(partition_type),
         'name': name,
     })
 
+    return OutputHandlingCommandRunner(
+        ['sgdisk', new_partition, get_device()],
+        _handle_output_not_success
+    )
 
-@_sgdisk_wrapper(get_device)
-def create_partition_as_rest(partition_type: PartitionType, name: str):
-    return '--new=0:0:0 --typecode=0:{type_code} --change-name=0:"{name}"'.format_map({
+
+def create_partition_as_rest(partition_type: PartitionType, name: str) -> CommandRunner:
+    new_partition = '--new=0:0:0 --typecode=0:{type_code} --change-name=0:"{name}"'.format_map({
         'type_code': PartitionType.get_value(partition_type),
         'name': name,
     })
+
+    return OutputHandlingCommandRunner(
+        ['sgdisk', new_partition, get_device()],
+        _handle_output_not_success
+    )
+
+
+def print_table() -> CommandRunner:
+    return OutputHandlingCommandRunner(
+        ['sgdisk', '--print', get_device()],
+        _handle_output_print
+    )
 
 
 if __name__ == '__main__':
