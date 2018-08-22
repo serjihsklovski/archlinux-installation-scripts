@@ -46,5 +46,5 @@ class OutputHandlingCommandRunner(CommandRunner):
         return [' '.join(self._command_parts)]
 
     def run(self):
-        output = subprocess.check_output(self._command_parts)
+        output = subprocess.check_output(self._command_parts, shell=True)
         self._output_handler(output)

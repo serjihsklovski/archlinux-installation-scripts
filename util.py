@@ -1,7 +1,9 @@
-from command_runner import SystemListCommandRunner, SystemCommandRunner, OutputHandlingCommandRunner
+from typing import Iterable, Generator
+
+from command_runner import SystemListCommandRunner, SystemCommandRunner, OutputHandlingCommandRunner, CommandRunner
 
 
-def gen_script_commands(command_runners: list) -> list:
+def gen_script_commands(command_runners: Iterable[CommandRunner]) -> Generator:
     for commands in map(lambda cr: cr.get_code(), command_runners):
         for command in commands:
             yield command
